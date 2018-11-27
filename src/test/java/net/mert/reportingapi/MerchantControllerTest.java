@@ -30,8 +30,22 @@ public class MerchantControllerTest {
     }
 
     @Test
+    public void getTokenWithInvalidParamsShouldReturnBadRequest() throws Exception {
+        MerchantLoginRequest merch = new MerchantLoginRequest("email@mail.net", "wrong-passw");
+
+        mockMvc.perform(post("/merchant/user/login")
+                .param("email", merch.getEmail())
+                .param("password", merch.getPassword())
+        ).andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("status").value("DECLINED"))
+                .andExpect(jsonPath("code").value(0));
+    }
+
+    @Test
     public void getTokenWithValidParamsShouldReturnToken() throws Exception {
-        MerchantLoginRequest merch = new MerchantLoginRequest("email@mail.net", "passw");
+        MerchantLoginRequest merch = new MerchantLoginRequest("email@mail.net", "email@mail.net");
 
         mockMvc.perform(post("/merchant/user/login")
                     .param("email", merch.getEmail())
