@@ -1,4 +1,4 @@
-package net.mert.reportingapi.model;
+package net.mert.reportingapi.model.response;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -24,4 +24,3 @@ public abstract class ResponseTemplate {
         return new ResponseEntity<>(this, status);
     }
 }
-

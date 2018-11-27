@@ -1,4 +1,4 @@
-package net.mert.reportingapi.model;
+package net.mert.reportingapi.model.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

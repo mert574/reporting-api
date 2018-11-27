@@ -1,8 +1,8 @@
 package net.mert.reportingapi.controller;
 
-import net.mert.reportingapi.model.ErrorResponse;
-import net.mert.reportingapi.model.MerchantLogin;
-import net.mert.reportingapi.model.TokenResponse;
+import net.mert.reportingapi.model.response.ErrorResponse;
+import net.mert.reportingapi.model.request.MerchantLogin;
+import net.mert.reportingapi.model.response.TokenResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
