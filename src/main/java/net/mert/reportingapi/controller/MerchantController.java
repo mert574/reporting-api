@@ -1,21 +1,28 @@
 package net.mert.reportingapi.controller;
 
+import net.mert.reportingapi.model.ErrorResponse;
 import net.mert.reportingapi.model.MerchantLogin;
-import org.springframework.http.HttpStatus;
+import net.mert.reportingapi.model.TokenResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class MerchantController {
 
     @PostMapping("/merchant/user/login")
-    public ResponseEntity<?> handleLogin(MerchantLogin merch, BindingResult result) {
+    public ResponseEntity<?> handleLogin(@Valid MerchantLogin merch, BindingResult result) {
         if (result.hasErrors()) {
-            return new ResponseEntity<>("bad request", HttpStatus.BAD_REQUEST);
+            return new ErrorResponse("bad request", "DECLINED").toResponseEntity();
         }
 
-        return new ResponseEntity<>("Hello World !", HttpStatus.OK);
+        // Consume the API somehow and get the token.
+        TokenResponse token = new TokenResponse();
+        token.setToken("this-is-a-legit-token");
+
+        return token.toResponseEntity();
     }
 }

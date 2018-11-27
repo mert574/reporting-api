@@ -2,8 +2,15 @@ package net.mert.reportingapi.model;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 @Data
 public class MerchantLogin {
 
-    private String email, password;
+    @NotEmpty @Email
+    private String email;
+
+    @NotEmpty
+    private String password;
 }
