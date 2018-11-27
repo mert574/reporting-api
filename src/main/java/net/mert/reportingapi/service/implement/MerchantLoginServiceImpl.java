@@ -1,6 +1,7 @@
-package net.mert.reportingapi.service;
+package net.mert.reportingapi.service.implement;
 
 import net.mert.reportingapi.model.response.TokenResponse;
+import net.mert.reportingapi.service.MerchantLoginService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

@@ -1,7 +1,8 @@
-package net.mert.reportingapi.service;
+package net.mert.reportingapi.service.implement;
 
 import net.mert.reportingapi.model.Transaction;
 import net.mert.reportingapi.model.response.TransactionsReportResponse;
+import net.mert.reportingapi.service.TransactionsService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
