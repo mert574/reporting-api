@@ -10,10 +10,10 @@ import java.util.Optional;
 public class MerchantLoginServiceImpl implements MerchantLoginService {
 
     @Override
-    public Optional<TokenResponse> login(MerchantLoginRequest merch) {
+    public Optional<TokenResponse> login(String email, String password) {
 
         // TODO: Consume the API somehow and get the token.
-        if (merch.getEmail().equals(merch.getPassword())) {
+        if (email.equals(password)) {
             TokenResponse token = new TokenResponse("this-is-a-legit-token");
             return Optional.of(token);
         }
