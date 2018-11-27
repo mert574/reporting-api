@@ -11,7 +11,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Optional<TransactionResponse> getByTransactionId(String transactionId) {
-
         // TODO: Consume the API somehow and get the transaction.
         return Optional.empty();
     }

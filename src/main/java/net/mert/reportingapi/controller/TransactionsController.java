@@ -42,6 +42,6 @@ public class TransactionsController {
             return report.get().toResponseEntity();
         }
 
-        return new ErrorResponse("Error: Required parameters are malformed","DECLINED").toResponseEntity();
+        return new ErrorResponse("Error: An unknown error occurred","DECLINED").toResponseEntity();
     }
 }
