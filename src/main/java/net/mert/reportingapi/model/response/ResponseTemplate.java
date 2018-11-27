@@ -12,7 +12,7 @@ public abstract class ResponseTemplate {
     @Max(64)
     private String status;
 
-    public ResponseTemplate() {
+    ResponseTemplate() {
         this.status = "APPROVED";
     }
 

@@ -27,10 +27,10 @@ public class MerchantController {
     @PostMapping("/merchant/user/login")
     public ResponseEntity<?> handleLogin(@ModelAttribute("MerchantLoginRequest") @Valid MerchantLoginRequest merch, BindingResult result) {
         if (result.hasErrors()) {
-            return new ErrorResponse("bad request", "DECLINED").toResponseEntity();
+            return new ErrorResponse("Error: Required parameters are malformed","DECLINED").toResponseEntity();
         }
 
-        Optional<TokenResponse> token = merchantService.login(merch);
+        Optional<TokenResponse> token = merchantService.login(merch.getEmail(), merch.getPassword());
         if (token.isPresent()) {
             return token.get().toResponseEntity();
         }
