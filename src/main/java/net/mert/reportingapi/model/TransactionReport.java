@@ -9,7 +9,7 @@ import javax.validation.constraints.Max;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transaction {
+public class TransactionReport {
     private int count, total;
 
     @Max(3)

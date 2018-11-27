@@ -2,7 +2,7 @@ package net.mert.reportingapi.model.response;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import net.mert.reportingapi.model.Transaction;
+import net.mert.reportingapi.model.TransactionReport;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 public class TransactionsReportResponse extends ResponseTemplate {
 
-    private List<Transaction> transactions;
+    private List<TransactionReport> transactionReports;
 }
