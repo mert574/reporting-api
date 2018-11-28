@@ -1,18 +1,20 @@
 package net.mert.reportingapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import java.util.Date;
 
 @Data
 public class Customer {
     private long id;
 
-    @Temporal(TemporalType.DATE)
-    private String created_at, updated_at, deleted_at;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date created_at, updated_at, deleted_at;
 
     private String number;
 
@@ -28,8 +30,9 @@ public class Customer {
 
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    private String birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
 
     private String gender;
 
