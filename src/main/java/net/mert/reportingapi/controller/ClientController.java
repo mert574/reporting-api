@@ -31,7 +31,8 @@ public class ClientController {
                                        @RequestHeader(name = "Authorization", required = false) TokenResponse token,
                                        BindingResult result) {
         if (result.hasErrors()) {
-            return new ErrorResponse("Error: Required parameters are malformed","DECLINED").toResponseEntity();
+            return new ErrorResponse("Error: Required parameters are malformed","DECLINED")
+                    .toResponseEntity();
         } else if (token == null) {
             return new ErrorResponse("Error: Token is invalid","DECLINED")
                     .toResponseEntity();
