@@ -31,11 +31,11 @@ public class MerchantControllerTest {
 
     @Test
     public void getTokenWithInvalidParamsShouldReturnBadRequest() throws Exception {
-        MerchantLoginRequest merch = new MerchantLoginRequest("email@mail.net", "wrong-passw");
+        MerchantLoginRequest merchant = new MerchantLoginRequest("demo@bumin.com.tr", "wrong-password");
 
         mockMvc.perform(post("/merchant/user/login")
-                .param("email", merch.getEmail())
-                .param("password", merch.getPassword())
+                .param("email", merchant.getEmail())
+                .param("password", merchant.getPassword())
         ).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -45,11 +45,11 @@ public class MerchantControllerTest {
 
     @Test
     public void getTokenWithValidParamsShouldReturnToken() throws Exception {
-        MerchantLoginRequest merch = new MerchantLoginRequest("email@mail.net", "email@mail.net");
+        MerchantLoginRequest merchant = new MerchantLoginRequest("demo@bumin.com.tr", "cjaiU8CV");
 
         mockMvc.perform(post("/merchant/user/login")
-                    .param("email", merch.getEmail())
-                    .param("password", merch.getPassword())
+                    .param("email", merchant.getEmail())
+                    .param("password", merchant.getPassword())
                 ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
