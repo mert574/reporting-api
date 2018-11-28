@@ -24,15 +24,14 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction")
-    public ResponseEntity<?> transaction(@ModelAttribute("TransactionRequest") TransactionRequest transaction,
+    public ResponseEntity<?> transaction(@ModelAttribute("TransactionRequest") TransactionRequest transactionRequest,
                                          BindingResult result) {
         if (result.hasErrors()) {
             return new ErrorResponse("Error: Required parameters are malformed","DECLINED").toResponseEntity();
         }
 
-        Optional<TransactionResponse> transactionRequest = transactionService.getByTransactionId(transaction.getTransactionId());
-
-        if (transactionRequest.isPresent()) {
+        Optional<TransactionResponse> transaction = transactionService.getByTransactionId(transactionRequest.getTransactionId());
+        if (transaction.isPresent()) {
             return new TransactionResponse().toResponseEntity();
         }
 

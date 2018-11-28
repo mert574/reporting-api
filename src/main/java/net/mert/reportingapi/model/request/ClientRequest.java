@@ -1,0 +1,14 @@
+package net.mert.reportingapi.model.request;
+
+import lombok.Data;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotEmpty;
+
+@Data
+public class ClientRequest {
+
+    @Max(32)
+    @NotEmpty
+    private String transactionId;
+}

@@ -15,7 +15,6 @@ public class TransactionsServiceImpl implements TransactionsService {
     @Override
     public Optional<TransactionsReportResponse> queryReport(String fromDate, String toDate,
                                                             int merchant, int acquirer) {
-
         if (fromDate.isEmpty() && toDate.isEmpty()) {
             return Optional.empty();
         }

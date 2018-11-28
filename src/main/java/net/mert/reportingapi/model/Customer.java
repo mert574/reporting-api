@@ -1,4 +1,4 @@
-package net.mert.reportingapi.model.response.transaction;
+package net.mert.reportingapi.model;
 
 import lombok.Data;
 
