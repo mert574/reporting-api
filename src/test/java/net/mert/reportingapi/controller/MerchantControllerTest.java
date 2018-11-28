@@ -1,4 +1,4 @@
-package net.mert.reportingapi;
+package net.mert.reportingapi.controller;
 
 import net.mert.reportingapi.model.request.MerchantLoginRequest;
 import org.junit.Test;
