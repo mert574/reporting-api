@@ -1,5 +1,6 @@
 package net.mert.reportingapi.model.response.transaction;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,5 +14,6 @@ public class TransactionMerchantAgent {
     private String merchantIp, merchantUserAgent;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date created_at, updated_at, deleted_at;
 }

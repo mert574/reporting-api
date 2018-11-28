@@ -1,7 +1,6 @@
 package net.mert.reportingapi.controller;
 
 import net.mert.reportingapi.model.request.MerchantLoginRequest;
-import net.mert.reportingapi.model.request.TransactionsReportRequest;
 import net.mert.reportingapi.model.response.TokenResponse;
 import net.mert.reportingapi.service.MerchantLoginService;
 import org.junit.Test;
@@ -13,10 +12,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Date;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;

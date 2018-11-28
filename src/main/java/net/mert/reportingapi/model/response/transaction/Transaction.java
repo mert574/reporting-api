@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Transaction {
 
-    private Merchant merchant;
+    private TransactionMerchant merchant;
 }

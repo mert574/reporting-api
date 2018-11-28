@@ -1,7 +1,6 @@
 package net.mert.reportingapi.model.response;
 
 import lombok.Data;
-
 import lombok.EqualsAndHashCode;
 import net.mert.reportingapi.model.TransactionReport;
 
