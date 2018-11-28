@@ -1,16 +1,16 @@
 package net.mert.reportingapi.model.request;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
+import java.util.Date;
 
 @Data
 public class TransactionListRequest {
 
-    @Temporal(TemporalType.DATE)
-    private String fromDate, toDate;
+    @DateTimeFormat(pattern = "yyyy-MM-DD")
+    private Date fromDate, toDate;
 
     @Max(64)
     private String status, operation;

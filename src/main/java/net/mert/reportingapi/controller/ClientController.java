@@ -1,7 +1,6 @@
 package net.mert.reportingapi.controller;
 
 import net.mert.reportingapi.model.request.ClientRequest;
-import net.mert.reportingapi.model.Customer;
 import net.mert.reportingapi.model.response.CustomerInfoResponse;
 import net.mert.reportingapi.model.response.ErrorResponse;
 import net.mert.reportingapi.service.CustomerService;

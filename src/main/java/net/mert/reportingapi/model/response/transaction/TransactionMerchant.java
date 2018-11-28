@@ -1,9 +1,9 @@
 package net.mert.reportingapi.model.response.transaction;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.Date;
 
 @Data
 public class TransactionMerchant {
@@ -19,8 +19,8 @@ public class TransactionMerchant {
     private String operation;
     private int fxTransactionId;
 
-    @Temporal(TemporalType.DATE)
-    private String created_at, updated_at;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date created_at, updated_at;
 
     private long id;
     private int acquirerTransactionId;

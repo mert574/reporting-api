@@ -1,17 +1,15 @@
 package net.mert.reportingapi.model.request;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 
 @Data
 public class TransactionsReportRequest {
 
-    @NotEmpty
-    @Temporal(value = TemporalType.DATE)
-    private String fromDate, toDate;
+    @DateTimeFormat(pattern = "yyyy-MM-DD")
+    private Date fromDate, toDate;
     
     private int merchant, acquirer;
 }

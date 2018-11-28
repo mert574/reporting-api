@@ -1,6 +1,5 @@
 package net.mert.reportingapi.service.implement;
 
-import jdk.nashorn.internal.parser.Token;
 import net.mert.reportingapi.model.response.TokenResponse;
 import net.mert.reportingapi.service.MerchantLoginService;
 import org.springframework.http.HttpStatus;
