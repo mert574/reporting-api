@@ -12,5 +12,5 @@ public class TransactionListResponse {
     @Max(256)
     private String next_page_url, prev_page_url;
 
-    private Integer from, to;
+    private int from, to;
 }

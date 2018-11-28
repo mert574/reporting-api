@@ -1,11 +1,9 @@
 package net.mert.reportingapi.service;
 
-import net.mert.reportingapi.model.request.TransactionsReportRequest;
-import net.mert.reportingapi.model.response.ResponseTemplate;
-import net.mert.reportingapi.model.response.TokenResponse;
+import net.mert.reportingapi.model.response.TransactionsReportResponse;
 
 import java.util.Optional;
 
 public interface TransactionsService {
-    Optional<ResponseTemplate> queryReport(TransactionsReportRequest request, TokenResponse token);
+    Optional<TransactionsReportResponse> queryReport(String fromDate, String toDate, int merchant, int acquirer);
 }
