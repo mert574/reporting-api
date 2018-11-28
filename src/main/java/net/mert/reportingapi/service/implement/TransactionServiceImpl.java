@@ -1,17 +1,40 @@
 package net.mert.reportingapi.service.implement;
 
+import net.mert.reportingapi.model.request.TransactionRequest;
+import net.mert.reportingapi.model.response.ErrorResponse;
+import net.mert.reportingapi.model.response.ResponseTemplate;
+import net.mert.reportingapi.model.response.TokenResponse;
 import net.mert.reportingapi.model.response.TransactionResponse;
 import net.mert.reportingapi.service.TransactionService;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
+    private final RestTemplate restTemplate = new RestTemplate();
+
     @Override
-    public Optional<TransactionResponse> getByTransactionId(String transactionId) {
-        // TODO: Consume the API somehow and get the transaction.
-        return Optional.empty();
+    public Optional<ResponseTemplate> getByTransactionId(TransactionRequest request, TokenResponse token) {
+
+        HttpHeaders tokenHeader = new HttpHeaders();
+        tokenHeader.set("Authorization", token.getToken());
+
+        try {
+            ResponseEntity<TransactionResponse> response = restTemplate.postForEntity(
+                    "https://sandbox-reporting.rpdpymnt.com/api/v3/transaction",
+                    new HttpEntity<>(request, tokenHeader),
+                    TransactionResponse.class);
+
+            return Optional.ofNullable(response.getBody());
+
+        } catch (Exception exception) {
+            return Optional.of(new ErrorResponse(exception.getMessage(), "DECLINED"));
+        }
     }
 }

@@ -2,13 +2,15 @@ package net.mert.reportingapi.controller;
 
 import net.mert.reportingapi.model.request.TransactionRequest;
 import net.mert.reportingapi.model.response.ErrorResponse;
-import net.mert.reportingapi.model.response.TransactionResponse;
+import net.mert.reportingapi.model.response.ResponseTemplate;
+import net.mert.reportingapi.model.response.TokenResponse;
 import net.mert.reportingapi.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
@@ -25,14 +27,15 @@ public class TransactionController {
 
     @PostMapping("/transaction")
     public ResponseEntity<?> transaction(@ModelAttribute("TransactionRequest") TransactionRequest transactionRequest,
+                                         @RequestHeader(name = "Authorization", required = false) TokenResponse token,
                                          BindingResult result) {
         if (result.hasErrors()) {
             return new ErrorResponse("Error: Required parameters are malformed","DECLINED").toResponseEntity();
         }
 
-        Optional<TransactionResponse> transaction = transactionService.getByTransactionId(transactionRequest.getTransactionId());
+        Optional<ResponseTemplate> transaction = transactionService.getByTransactionId(transactionRequest, token);
         if (transaction.isPresent()) {
-            return new TransactionResponse().toResponseEntity();
+            return transaction.get().toResponseEntity();
         }
 
         return new ErrorResponse("Error: An unknown error occurred","DECLINED").toResponseEntity();
