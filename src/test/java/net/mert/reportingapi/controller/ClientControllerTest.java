@@ -83,4 +83,26 @@ public class ClientControllerTest {
                 .andExpect(jsonPath("status").value("DECLINED"))
                 .andExpect(jsonPath("message").value("Token Expired"));
     }
+
+    @Test
+    public void getClientWithValidParamAndHeaderShouldReturnCustomerInfo() throws Exception {
+        MerchantLoginRequest loginData = new MerchantLoginRequest("demo@bumin.com.tr", "cjaiU8CV");
+        Optional<TokenResponse> login = merchantLoginService.login(loginData);
+        String transactionId = "1010981-1539271547-1293";
+        String token;
+
+        if (login.isPresent()) {
+            token = login.get().getToken();
+        } else {
+            throw new UnsupportedOperationException("Cannot get a valid JWT Token!");
+        }
+
+        mockMvc.perform(post("/client")
+                .header("Authorization", token)
+                .param("transactionId", transactionId)
+        ).andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("customerInfo").isMap());
+    }
 }
