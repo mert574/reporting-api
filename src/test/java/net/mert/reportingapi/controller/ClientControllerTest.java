@@ -19,7 +19,6 @@ import java.util.Optional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
