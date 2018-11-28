@@ -3,9 +3,10 @@ package net.mert.reportingapi.model.response;
 import lombok.Data;
 
 import javax.validation.constraints.Max;
+import java.util.List;
 
 @Data
-public class TransactionListResponse {
+public class TransactionListResponse extends ResponseTemplate{
 
     private int per_page, current_page;
 
@@ -13,4 +14,6 @@ public class TransactionListResponse {
     private String next_page_url, prev_page_url;
 
     private Integer from, to;
+
+    private List<TransactionResponse> data;
 }

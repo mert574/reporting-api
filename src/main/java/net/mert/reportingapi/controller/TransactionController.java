@@ -1,5 +1,6 @@
 package net.mert.reportingapi.controller;
 
+import net.mert.reportingapi.model.request.TransactionListRequest;
 import net.mert.reportingapi.model.request.TransactionRequest;
 import net.mert.reportingapi.model.response.ErrorResponse;
 import net.mert.reportingapi.model.response.ResponseTemplate;
@@ -40,6 +41,26 @@ public class TransactionController {
         }
 
         Optional<ResponseTemplate> transaction = transactionService.getByTransactionId(transactionRequest, token);
+        if (transaction.isPresent()) {
+            return transaction.get().toResponseEntity();
+        }
+
+        return new ErrorResponse("Error: An unknown error occurred","DECLINED").toResponseEntity();
+    }
+
+    @PostMapping("/transaction/list")
+    public ResponseEntity<?> list(@ModelAttribute(name = "TransactionListRequest") @Valid TransactionListRequest request,
+                                             @RequestHeader(name = "Authorization", required = false) TokenResponse token,
+                                             BindingResult result) {
+        if (result.hasErrors()) {
+            return new ErrorResponse("Error: Required parameters are malformed","DECLINED")
+                    .toResponseEntity();
+        } else if (token == null) {
+            return new ErrorResponse("Error: Token is invalid","DECLINED")
+                    .toResponseEntity();
+        }
+
+        Optional<ResponseTemplate> transaction = transactionService.queryTransactions(request, token);
         if (transaction.isPresent()) {
             return transaction.get().toResponseEntity();
         }
