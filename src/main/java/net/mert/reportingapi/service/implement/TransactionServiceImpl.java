@@ -8,8 +8,10 @@ import net.mert.reportingapi.model.response.TransactionResponse;
 import net.mert.reportingapi.service.TransactionService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
@@ -21,7 +23,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Optional<ResponseTemplate> getByTransactionId(TransactionRequest request, TokenResponse token) {
-
         HttpHeaders tokenHeader = new HttpHeaders();
         tokenHeader.set("Authorization", token.getToken());
 
@@ -30,11 +31,13 @@ public class TransactionServiceImpl implements TransactionService {
                     "https://sandbox-reporting.rpdpymnt.com/api/v3/transaction",
                     new HttpEntity<>(request, tokenHeader),
                     TransactionResponse.class);
-
             return Optional.ofNullable(response.getBody());
+        } catch (HttpStatusCodeException exception) {
+            if (exception.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                return Optional.of(new ErrorResponse("Token Expired", "DECLINED"));
+            }
+        } catch (Exception exception) {}
 
-        } catch (Exception exception) {
-            return Optional.of(new ErrorResponse(exception.getMessage(), "DECLINED"));
-        }
+        return Optional.empty();
     }
 }
