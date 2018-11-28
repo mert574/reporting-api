@@ -10,7 +10,7 @@ import javax.validation.constraints.Max;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionReport {
-    private int count, total;
+    private Long count, total;
 
     @Max(3)
     private String currency;

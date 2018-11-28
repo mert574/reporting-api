@@ -1,5 +1,6 @@
 package net.mert.reportingapi.model.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,13 +10,14 @@ import java.util.Date;
 @Data
 public class TransactionListRequest {
 
-    @DateTimeFormat(pattern = "yyyy-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date fromDate, toDate;
 
     @Max(64)
     private String status, operation;
 
-    private int merchantId, acquirerId;
+    private Integer merchantId, acquirerId;
 
     @Max(32)
     private String paymentMethod;
@@ -29,5 +31,5 @@ public class TransactionListRequest {
     @Max(256)
     private String filterValue;
 
-    private int page;
+    private Integer page;
 }

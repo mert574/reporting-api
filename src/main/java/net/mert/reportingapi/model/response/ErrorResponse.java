@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 public class ErrorResponse extends ResponseTemplate {
 
     private String message;
-    private int code;
+    private Integer code;
 
     public ErrorResponse(String message, String statusText) {
         this.setStatus(statusText);
