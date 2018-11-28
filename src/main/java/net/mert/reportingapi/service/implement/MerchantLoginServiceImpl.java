@@ -28,9 +28,7 @@ public class MerchantLoginServiceImpl implements MerchantLoginService {
             if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
                 return Optional.of(response.getBody());
             }
-        } catch (Exception exp) {
-            System.out.println(exp.getMessage());
-        }
+        } catch (Exception exp) {}
 
         return Optional.empty();
     }
