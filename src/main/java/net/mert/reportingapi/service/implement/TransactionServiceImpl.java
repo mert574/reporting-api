@@ -31,6 +31,7 @@ public class TransactionServiceImpl implements TransactionService {
                     "https://sandbox-reporting.rpdpymnt.com/api/v3/transaction",
                     new HttpEntity<>(request, tokenHeader),
                     TransactionResponse.class);
+
             return Optional.ofNullable(response.getBody());
         } catch (HttpStatusCodeException exception) {
             if (exception.getStatusCode() == HttpStatus.UNAUTHORIZED) {
