@@ -8,8 +8,10 @@ import net.mert.reportingapi.model.response.TransactionsReportResponse;
 import net.mert.reportingapi.service.TransactionsService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
@@ -31,9 +33,12 @@ public class TransactionsServiceImpl implements TransactionsService {
                     TransactionsReportResponse.class);
 
             return Optional.ofNullable(response.getBody());
+        } catch (HttpStatusCodeException exception) {
+            if (exception.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                return Optional.of(new ErrorResponse("Token Expired", "DECLINED"));
+            }
+        } catch (Exception exception) {}
 
-        } catch (Exception exception) {
-            return Optional.of(new ErrorResponse(exception.getMessage(), "DECLINED"));
-        }
+        return Optional.empty();
     }
 }
