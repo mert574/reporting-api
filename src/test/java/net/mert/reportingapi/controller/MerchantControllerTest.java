@@ -22,6 +22,9 @@ public class MerchantControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private final String validEmail = "demo@bumin.com.tr";
+    private final String validPasword = "cjaiU8CV";
+
     @Test
     public void getTokenWithNoParamsShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/merchant/user/login")).andDo(print())
@@ -32,7 +35,7 @@ public class MerchantControllerTest {
 
     @Test
     public void getTokenWithInvalidParamsShouldReturnBadRequest() throws Exception {
-        MerchantLoginRequest merchant = new MerchantLoginRequest("demo@bumin.com.tr", "wrong-password");
+        MerchantLoginRequest merchant = new MerchantLoginRequest(validEmail, "wrong-password");
 
         mockMvc.perform(post("/merchant/user/login")
                 .param("email", merchant.getEmail())
@@ -46,7 +49,7 @@ public class MerchantControllerTest {
 
     @Test
     public void getTokenWithValidParamsShouldReturnToken() throws Exception {
-        MerchantLoginRequest merchant = new MerchantLoginRequest("demo@bumin.com.tr", "cjaiU8CV");
+        MerchantLoginRequest merchant = new MerchantLoginRequest(validEmail, validPasword);
 
         mockMvc.perform(post("/merchant/user/login")
                     .param("email", merchant.getEmail())

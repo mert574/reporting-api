@@ -31,6 +31,7 @@ public class ClientControllerTest {
     @Autowired
     private MerchantLoginService merchantLoginService;
 
+    private final String validTransactionId = "1010981-1539271547-1293";
     private String token;
 
     @Before
@@ -55,10 +56,8 @@ public class ClientControllerTest {
 
     @Test
     public void getClientWithNoHeaderWithParamShouldReturnBadRequest() throws Exception {
-        String transactionId = "1010981-1539271547-1293";
-
         mockMvc.perform(post("/client")
-                .param("transactionId", transactionId)
+                .param("transactionId", validTransactionId)
         ).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -90,11 +89,9 @@ public class ClientControllerTest {
 
     @Test
     public void getClientWithValidParamAndHeaderShouldReturnCustomerInfo() throws Exception {
-        String transactionId = "1010981-1539271547-1293";
-
         mockMvc.perform(post("/client")
                 .header("Authorization", token)
-                .param("transactionId", transactionId)
+                .param("transactionId", validTransactionId)
         ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))

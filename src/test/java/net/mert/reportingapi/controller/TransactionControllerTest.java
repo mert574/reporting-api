@@ -32,10 +32,15 @@ public class TransactionControllerTest {
     private MerchantLoginService merchantLoginService;
 
     private String token;
+    private final String validTransactionId = "1010981-1539271547-1293";
+    private final String validEmail = "demo@bumin.com.tr";
+    private final String validPasword = "cjaiU8CV";
+    private final String validFromDate = "2000-01-01";
+    private final String validToDate = "2020-12-31";
 
     @Before
     public void setUp() {
-        MerchantLoginRequest loginData = new MerchantLoginRequest("demo@bumin.com.tr", "cjaiU8CV");
+        MerchantLoginRequest loginData = new MerchantLoginRequest(validEmail, validPasword);
         Optional<TokenResponse> login = merchantLoginService.login(loginData);
 
         if (login.isPresent()) {
@@ -56,10 +61,8 @@ public class TransactionControllerTest {
 
     @Test
     public void getTransactionWithNoHeaderWithParamShouldReturnBadRequest() throws Exception {
-        String transactionId = "1010981-1539271547-1293";
-
         mockMvc.perform(post("/transaction")
-                .param("transactionId", transactionId)
+                .param("transactionId", validTransactionId)
         ).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -91,11 +94,9 @@ public class TransactionControllerTest {
 
     @Test
     public void getTransactionValidParamAndHeaderShouldReturnTransaction() throws Exception {
-        String transactionId = "1010981-1539271547-1293";
-
         mockMvc.perform(post("/transaction")
                 .header("Authorization", token)
-                .param("transactionId", transactionId)
+                .param("transactionId", validTransactionId)
         ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -118,11 +119,9 @@ public class TransactionControllerTest {
 
     @Test
     public void listTransactionsWithNoHeaderWithParamsShouldReturnBadRequest() throws Exception {
-        String fromDate = "2000-01-01", toDate = "2020-12-31";
-
         mockMvc.perform(post("/transaction/list")
-                .param("fromDate", fromDate)
-                .param("toDate", toDate)
+                .param("fromDate", validFromDate)
+                .param("toDate", validToDate)
         ).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -155,12 +154,10 @@ public class TransactionControllerTest {
 
     @Test
     public void listTransactionsValidParamAndHeaderShouldReturnList() throws Exception {
-        String fromDate = "2000-01-01", toDate = "2020-12-31";
-
         mockMvc.perform(post("/transaction/list")
                 .header("Authorization", token)
-                .param("fromDate", fromDate)
-                .param("toDate", toDate)
+                .param("fromDate", validFromDate)
+                .param("toDate", validToDate)
         ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -185,11 +182,9 @@ public class TransactionControllerTest {
 
     @Test
     public void getResponseWithNoHeaderWithParamsShouldReturnBadRequest() throws Exception {
-        String fromDate = "2000-01-01", toDate = "2020-12-31";
-
         mockMvc.perform(post("/transactions/report")
-                .param("fromDate", fromDate)
-                .param("toDate", toDate)
+                .param("fromDate", validFromDate)
+                .param("toDate", validToDate)
         ).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -209,12 +204,10 @@ public class TransactionControllerTest {
 
     @Test
     public void getResponseWithParamsAndHeaderShouldReturnProperResponse() throws Exception {
-        String fromDate = "2000-01-01", toDate = "2020-12-31";
-
         mockMvc.perform(post("/transactions/report")
                 .header("Authorization", token)
-                .param("fromDate", fromDate)
-                .param("toDate", toDate)
+                .param("fromDate", validFromDate)
+                .param("toDate", validToDate)
         ).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
