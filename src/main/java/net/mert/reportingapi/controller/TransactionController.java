@@ -2,6 +2,7 @@ package net.mert.reportingapi.controller;
 
 import net.mert.reportingapi.model.request.TransactionListRequest;
 import net.mert.reportingapi.model.request.TransactionRequest;
+import net.mert.reportingapi.model.request.TransactionsReportRequest;
 import net.mert.reportingapi.model.response.ErrorResponse;
 import net.mert.reportingapi.model.response.ResponseTemplate;
 import net.mert.reportingapi.model.response.TokenResponse;
@@ -62,6 +63,28 @@ public class TransactionController {
         Optional<ResponseTemplate> transaction = transactionService.queryTransactions(request, token);
         if (transaction.isPresent()) {
             return transaction.get().toResponseEntity();
+        }
+
+        return new ErrorResponse("Error: An unknown error occurred","DECLINED").toResponseEntity();
+    }
+
+    @PostMapping("/transactions/report")
+    public ResponseEntity<?> report(
+            @ModelAttribute("TransactionsReportRequest") @Valid TransactionsReportRequest reportRequest,
+            @RequestHeader(required = false, name = "Authorization") @Valid TokenResponse token,
+            BindingResult result) {
+
+        if (result.hasErrors()) {
+            return new ErrorResponse("Error: Required parameters are malformed","DECLINED")
+                    .toResponseEntity();
+        } else if (token == null) {
+            return new ErrorResponse("Error: Token is invalid","DECLINED")
+                    .toResponseEntity();
+        }
+
+        Optional<ResponseTemplate> report = transactionService.queryReport(reportRequest, token);
+        if (report.isPresent()) {
+            return report.get().toResponseEntity();
         }
 
         return new ErrorResponse("Error: An unknown error occurred","DECLINED").toResponseEntity();
