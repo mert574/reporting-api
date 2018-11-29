@@ -28,6 +28,7 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
+    @SuppressWarnings("Duplicates")
     @PostMapping("/transaction")
     public ResponseEntity<?> transaction(@ModelAttribute("TransactionRequest") TransactionRequest transactionRequest,
                                          @RequestHeader(name = "Authorization", required = false) TokenResponse token,

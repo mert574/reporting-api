@@ -28,7 +28,8 @@ public class MerchantController {
     public ResponseEntity<?> handleLogin(@ModelAttribute("MerchantLoginRequest") @Valid MerchantLoginRequest request,
                                          BindingResult result) {
         if (result.hasErrors()) {
-            return new ErrorResponse("Error: Required parameters are malformed","DECLINED").toResponseEntity();
+            return new ErrorResponse("Error: Required parameters are malformed","DECLINED")
+                    .toResponseEntity();
         }
 
         Optional<TokenResponse> token = merchantService.login(request);
@@ -36,6 +37,7 @@ public class MerchantController {
             return token.get().toResponseEntity();
         }
 
-        return new ErrorResponse("Error: Merchant User credentials is not valid","DECLINED").toResponseEntity();
+        return new ErrorResponse("Error: Merchant User credentials is not valid","DECLINED")
+                .toResponseEntity();
     }
 }

@@ -25,6 +25,7 @@ public class ClientController {
         this.clientService = clientService;
     }
 
+    @SuppressWarnings("Duplicates")
     @PostMapping("/client")
     public ResponseEntity<?> getClient(@ModelAttribute("ClientRequest") ClientRequest request,
                                        @RequestHeader(name = "Authorization", required = false) TokenResponse token,
