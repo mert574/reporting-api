@@ -11,4 +11,5 @@ logging:
   file: logfile.log
   level:
     net.mert.reportingapi: DEBUG
-    org.springframework: ERROR
+    org: ERROR
+    com: ERROR
