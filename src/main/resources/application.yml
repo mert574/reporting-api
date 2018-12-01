@@ -1,0 +1,14 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+server:
+  port: 8080
+
+logging:
+  file: logfile.log
+  level:
+    net.mert.reportingapi: DEBUG
+    org.springframework: ERROR
