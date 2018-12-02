@@ -5,6 +5,7 @@ import net.mert.reportingapi.model.response.ErrorResponse;
 import net.mert.reportingapi.model.response.ResponseTemplate;
 import net.mert.reportingapi.model.response.TokenResponse;
 import net.mert.reportingapi.service.MerchantLoginService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ import java.util.Optional;
 @Service
 public class MerchantLoginServiceImpl implements MerchantLoginService {
 
+    @Value("${reportingapi.url}")
+    private String url;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
@@ -24,7 +28,7 @@ public class MerchantLoginServiceImpl implements MerchantLoginService {
 
         try {
             ResponseEntity<TokenResponse> response = restTemplate.postForEntity(
-                    "https://sandbox-reporting.rpdpymnt.com/api/v3/merchant/user/login",
+                    url + "/merchant/user/login",
                     new HttpEntity<>(request),
                     TokenResponse.class);
 

@@ -7,3 +7,6 @@ logging:
     net.mert.reportingapi: DEBUG
     org: ERROR
     com: ERROR
+
+reportingapi:
+  url: "https://sandbox-reporting.rpdpymnt.com/api/v3"

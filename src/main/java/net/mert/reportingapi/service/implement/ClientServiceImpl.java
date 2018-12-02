@@ -6,6 +6,7 @@ import net.mert.reportingapi.model.response.ErrorResponse;
 import net.mert.reportingapi.model.response.ResponseTemplate;
 import net.mert.reportingapi.model.response.TokenResponse;
 import net.mert.reportingapi.service.ClientService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,9 @@ import java.util.Optional;
 @Service
 public class ClientServiceImpl implements ClientService {
 
+    @Value("${reportingapi.url}")
+    private String url;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
@@ -28,7 +32,7 @@ public class ClientServiceImpl implements ClientService {
 
         try {
             ResponseEntity<CustomerInfoResponse> response = restTemplate.postForEntity(
-                    "https://sandbox-reporting.rpdpymnt.com/api/v3/client",
+                    url + "/client",
                     new HttpEntity<>(request, tokenHeader),
                     CustomerInfoResponse.class);
 

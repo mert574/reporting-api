@@ -5,6 +5,7 @@ import net.mert.reportingapi.model.request.TransactionRequest;
 import net.mert.reportingapi.model.request.TransactionsReportRequest;
 import net.mert.reportingapi.model.response.*;
 import net.mert.reportingapi.service.TransactionService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,9 @@ import java.util.Optional;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
+    @Value("${reportingapi.url}")
+    private String url;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Override
@@ -27,7 +31,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         try {
             ResponseEntity<TransactionResponse> response = restTemplate.postForEntity(
-                    "https://sandbox-reporting.rpdpymnt.com/api/v3/transaction",
+                    url + "/transaction",
                     new HttpEntity<>(request, tokenHeader),
                     TransactionResponse.class);
 
@@ -36,7 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
             if (exception.getStatusCode() == HttpStatus.UNAUTHORIZED) {
                 return Optional.of(new ErrorResponse("Token Expired", "DECLINED"));
             }
-        } catch (Exception exception) {}
+        }
 
         return Optional.empty();
     }
@@ -48,7 +52,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         try {
             ResponseEntity<TransactionListResponse> response = restTemplate.postForEntity(
-                    "https://sandbox-reporting.rpdpymnt.com/api/v3/transaction/list",
+                    url + "/transaction/list",
                     new HttpEntity<>(request, tokenHeader),
                     TransactionListResponse.class);
 
@@ -69,7 +73,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         try {
             ResponseEntity<TransactionsReportResponse> response = restTemplate.postForEntity(
-                    "https://sandbox-reporting.rpdpymnt.com/api/v3/transactions/report",
+                    url + "/transactions/report",
                     new HttpEntity<>(request, tokenHeader),
                     TransactionsReportResponse.class);
 
@@ -78,7 +82,7 @@ public class TransactionServiceImpl implements TransactionService {
             if (exception.getStatusCode() == HttpStatus.UNAUTHORIZED) {
                 return Optional.of(new ErrorResponse("Token Expired", "DECLINED"));
             }
-        } catch (Exception exception) {}
+        }
 
         return Optional.empty();
     }
