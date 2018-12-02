@@ -57,7 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
             if (exception.getStatusCode() == HttpStatus.UNAUTHORIZED) {
                 return Optional.of(new ErrorResponse("Token Expired", "DECLINED"));
             }
-        } catch (Exception exception) {}
+        }
 
         return Optional.empty();
     }

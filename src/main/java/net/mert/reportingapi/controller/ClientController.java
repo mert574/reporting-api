@@ -27,7 +27,6 @@ public class ClientController {
         this.clientService = clientService;
     }
 
-    @SuppressWarnings("Duplicates")
     @PostMapping("/client")
     public ResponseEntity<?> getClient(ClientRequest request,
                                        @RequestHeader(name = "Authorization", required = false) TokenResponse token,
@@ -35,14 +34,13 @@ public class ClientController {
 
         logger.debug("getClient: Got a new request. {}", request);
 
-        if (result.hasErrors()) {
+        if (result.hasErrors() || request.getTransactionId() == null) {
             logger.error("getClient: Binding error. Error(s):\n\t{}\n", result.getAllErrors());
             return new ErrorResponse("Error: Required parameters are malformed","DECLINED")
                     .toResponseEntity();
         } else if (token == null || token.getToken().equals("null")) {
             logger.warn("getClient: Request does not have a proper token. {}", token);
-            return new ErrorResponse("Error: Token is invalid","DECLINED")
-                    .toResponseEntity();
+            return new ErrorResponse("Error: Token is invalid","DECLINED").toResponseEntity();
         }
 
         Optional<ResponseTemplate> customerInfo = clientService.getByTransactionId(request, token);

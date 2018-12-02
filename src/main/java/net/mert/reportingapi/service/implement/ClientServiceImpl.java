@@ -37,7 +37,7 @@ public class ClientServiceImpl implements ClientService {
             if (exception.getStatusCode() == HttpStatus.UNAUTHORIZED) {
                 return Optional.of(new ErrorResponse("Token Expired", "DECLINED"));
             }
-        } catch (Exception exception) {}
+        }
 
         return Optional.empty();
     }

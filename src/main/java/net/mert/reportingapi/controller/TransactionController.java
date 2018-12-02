@@ -37,7 +37,7 @@ public class TransactionController {
 
         logger.debug("getTransaction: Got a new request.\n\t{}\n", request);
 
-        if (result.hasErrors()) {
+        if (result.hasErrors() || request.getTransactionId() == null) {
             logger.error("getTransaction: Binding error. Error(s):\n{}", result.getAllErrors());
             return new ErrorResponse("Error: Required parameters are malformed","DECLINED")
                     .toResponseEntity();

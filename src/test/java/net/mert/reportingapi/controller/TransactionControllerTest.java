@@ -1,6 +1,7 @@
 package net.mert.reportingapi.controller;
 
 import net.mert.reportingapi.model.request.MerchantLoginRequest;
+import net.mert.reportingapi.model.response.ResponseTemplate;
 import net.mert.reportingapi.model.response.TokenResponse;
 import net.mert.reportingapi.service.MerchantLoginService;
 import org.junit.Before;
@@ -41,10 +42,10 @@ public class TransactionControllerTest {
     @Before
     public void setUp() {
         MerchantLoginRequest loginData = new MerchantLoginRequest(validEmail, validPasword);
-        Optional<TokenResponse> login = merchantLoginService.login(loginData);
+        Optional<ResponseTemplate> login = merchantLoginService.login(loginData);
 
         if (login.isPresent()) {
-            token = login.get().getToken();
+            token = ((TokenResponse) login.get()).getToken();
         } else {
             throw new UnsupportedOperationException("Cannot get a valid JWT Token!");
         }
@@ -52,7 +53,7 @@ public class TransactionControllerTest {
 
     /* URL: /transaction */
     @Test
-    public void getTransactionWithNoParamAndHeaderShouldReturnBadRequest() throws Exception {
+    public void getTransaction_WithNoParamAndHeader_ShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/transaction")).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -60,7 +61,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getTransactionWithNoHeaderWithParamShouldReturnBadRequest() throws Exception {
+    public void getTransaction_WithParamAndNoHeader_ShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/transaction")
                 .param("transactionId", validTransactionId)
         ).andDo(print())
@@ -70,7 +71,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getTransactionWithNoParamWithHeaderShouldReturnBadRequest() throws Exception {
+    public void getTransaction_WithHeaderAndNoParam_ShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/transaction")
                 .header("Authorization", token)
         ).andDo(print())
@@ -80,11 +81,12 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getTransactionWithExpiredTokenShouldReturnTokenExpired() throws Exception {
+    public void getTransaction_WithParamAndExpiredToken_ShouldReturnBadRequest() throws Exception {
         String wrongToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjaGFudFVzZXJJZCI6NTMsInJvbGUiOiJ1c2VyIiwibWVyY2hhbnRJZCI6Mywic3ViTWVyY2hhbnRJZHMiOlszLDc0LDkzLDExOTEsMTI5NSwxMTEsMTM3LDEzOCwxNDIsMTQ1LDE0NiwxNTMsMzM0LDE3NSwxODQsMjIwLDIyMSwyMjIsMjIzLDI5NCwzMjIsMzIzLDMyNywzMjksMzMwLDM0OSwzOTAsMzkxLDQ1NSw0NTYsNDc5LDQ4OCw1NjMsMTE0OSw1NzAsMTEzOCwxMTU2LDExNTcsMTE1OCwxMTc5LDEyOTMsMTI5NF0sInRpbWVzdGFtcCI6MTU0MzQxMzg3MH0.oeWxzEh_u1KlLG2dHnGwmm6kA_SUw9hbB_YDGzvAIBU";
 
         mockMvc.perform(post("/transaction")
                 .header("Authorization", wrongToken)
+                .param("transactionId", validTransactionId)
         ).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -93,7 +95,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getTransactionValidParamAndHeaderShouldReturnTransaction() throws Exception {
+    public void getTransaction_WithParamAndHeader_ShouldReturnOk() throws Exception {
         mockMvc.perform(post("/transaction")
                 .header("Authorization", token)
                 .param("transactionId", validTransactionId)
@@ -110,7 +112,7 @@ public class TransactionControllerTest {
 
     /* URL: /transaction/list */
     @Test
-    public void listTransactionsWithNoParamAndHeaderShouldReturnBadRequest() throws Exception {
+    public void listTransactions_NoParamAndHeader_ShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/transaction/list")).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -118,7 +120,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void listTransactionsWithNoHeaderWithParamsShouldReturnBadRequest() throws Exception {
+    public void listTransactions_WithParamsAndNoHeader_ShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/transaction/list")
                 .param("fromDate", validFromDate)
                 .param("toDate", validToDate)
@@ -129,7 +131,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void listTransactionsWithNoParamsWithHeaderShouldReturnEmptyData() throws Exception {
+    public void listTransactions_WithHeaderAndNoParams_ShouldReturnEmptyData() throws Exception {
         mockMvc.perform(post("/transaction/list")
                 .header("Authorization", token)
         ).andDo(print())
@@ -140,7 +142,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void listTransactionsWithExpiredTokenShouldReturnTokenExpired() throws Exception {
+    public void listTransactions_WithParamsAndExpiredToken_ShouldReturnBadRequest() throws Exception {
         String wrongToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjaGFudFVzZXJJZCI6NTMsInJvbGUiOiJ1c2VyIiwibWVyY2hhbnRJZCI6Mywic3ViTWVyY2hhbnRJZHMiOlszLDc0LDkzLDExOTEsMTI5NSwxMTEsMTM3LDEzOCwxNDIsMTQ1LDE0NiwxNTMsMzM0LDE3NSwxODQsMjIwLDIyMSwyMjIsMjIzLDI5NCwzMjIsMzIzLDMyNywzMjksMzMwLDM0OSwzOTAsMzkxLDQ1NSw0NTYsNDc5LDQ4OCw1NjMsMTE0OSw1NzAsMTEzOCwxMTU2LDExNTcsMTE1OCwxMTc5LDEyOTMsMTI5NF0sInRpbWVzdGFtcCI6MTU0MzQxMzg3MH0.oeWxzEh_u1KlLG2dHnGwmm6kA_SUw9hbB_YDGzvAIBU";
 
         mockMvc.perform(post("/transaction/list")
@@ -153,7 +155,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void listTransactionsValidParamAndHeaderShouldReturnList() throws Exception {
+    public void listTransactions_WithParamAndHeader_ShouldReturnOk() throws Exception {
         mockMvc.perform(post("/transaction/list")
                 .header("Authorization", token)
                 .param("fromDate", validFromDate)
@@ -173,7 +175,7 @@ public class TransactionControllerTest {
 
     /* URL: /transactions/report */
     @Test
-    public void getResponseWithNoHeaderNoParamsShouldReturnBadRequest() throws Exception {
+    public void transactionsReport_NoHeaderAndParams_ShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/transactions/report")).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -181,7 +183,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getResponseWithNoHeaderWithParamsShouldReturnBadRequest() throws Exception {
+    public void transactionsReport_WithParamsAndNoHeader_ShouldReturnBadRequest() throws Exception {
         mockMvc.perform(post("/transactions/report")
                 .param("fromDate", validFromDate)
                 .param("toDate", validToDate)
@@ -192,7 +194,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getResponseWithNoParamsWithHeaderShouldReturnEmptyResponseField() throws Exception {
+    public void transactionsReport_WithHeaderAndNoParams_ShouldReturnEmptyData() throws Exception {
         mockMvc.perform(post("/transactions/report")
                 .header("Authorization", token)
         ).andDo(print())
@@ -203,7 +205,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getResponseWithParamsAndHeaderShouldReturnProperResponse() throws Exception {
+    public void transactionsReport_WithParamsAndHeader_ShouldReturnOk() throws Exception {
         mockMvc.perform(post("/transactions/report")
                 .header("Authorization", token)
                 .param("fromDate", validFromDate)
@@ -216,7 +218,7 @@ public class TransactionControllerTest {
     }
 
     @Test
-    public void getResponseWithExpiredTokenShouldReturnTokenExpired() throws Exception {
+    public void transactionsReport_WithParamsAndExpiredToken_ShouldReturnBadRequest() throws Exception {
         String wrongToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtZXJjaGFudFVzZXJJZCI6NTMsInJvbGUiOiJ1c2VyIiwibWVyY2hhbnRJZCI6Mywic3ViTWVyY2hhbnRJZHMiOlszLDc0LDkzLDExOTEsMTI5NSwxMTEsMTM3LDEzOCwxNDIsMTQ1LDE0NiwxNTMsMzM0LDE3NSwxODQsMjIwLDIyMSwyMjIsMjIzLDI5NCwzMjIsMzIzLDMyNywzMjksMzMwLDM0OSwzOTAsMzkxLDQ1NSw0NTYsNDc5LDQ4OCw1NjMsMTE0OSw1NzAsMTEzOCwxMTU2LDExNTcsMTE1OCwxMTc5LDEyOTMsMTI5NF0sInRpbWVzdGFtcCI6MTU0MzQxMzg3MH0.oeWxzEh_u1KlLG2dHnGwmm6kA_SUw9hbB_YDGzvAIBU";
 
         mockMvc.perform(post("/transactions/report")
