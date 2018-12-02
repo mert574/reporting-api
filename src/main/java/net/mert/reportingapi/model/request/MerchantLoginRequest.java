@@ -15,6 +15,15 @@ public class MerchantLoginRequest {
 
     private String apiKey;
 
+    @Override
+    public String toString() {
+        return "MerchantLoginRequest{" +
+                "email='" + email + '\'' +
+                ", password= *hidden*" +
+                ", apiKey=" + ((apiKey == null) ? "null" : "*hidden*") +
+                '}';
+    }
+
     public MerchantLoginRequest(@NotEmpty @Email String email, @NotEmpty String password) {
         this.email = email;
         this.password = password;
