@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 @Data
-public class TransactionMerchantAgent {
+public class Agent {
 
     private long id;
     private String customerIp, customerUserAgent;

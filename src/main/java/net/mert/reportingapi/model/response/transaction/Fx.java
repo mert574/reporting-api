@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class Fx {
 
-    private FxMerchant merchant;
+    private Merchant merchant;
 }

@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import net.mert.reportingapi.model.Customer;
 import net.mert.reportingapi.model.response.transaction.Fx;
-import net.mert.reportingapi.model.response.transaction.Merchant;
 import net.mert.reportingapi.model.response.transaction.Transaction;
+import net.mert.reportingapi.model.response.transaction.Merchant;
 
 @Data
 @EqualsAndHashCode(callSuper=false)

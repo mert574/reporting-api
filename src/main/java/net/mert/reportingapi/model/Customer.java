@@ -12,11 +12,12 @@ import java.util.Date;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Customer {
-    private long id;
+    private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date created_at, updated_at, deleted_at;
+    private Date created_at, updated_at, deleted_at,
+            birthday;
 
     private String number;
 
@@ -27,15 +28,8 @@ public class Customer {
     private String expiryYear;
 
     private String startMonth, startYear;
-
     private String issueNumber;
-
     private String email;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
-
     private String gender;
 
     private String billingTitle,
