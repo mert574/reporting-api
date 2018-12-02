@@ -8,6 +8,10 @@ This app uses an embedded DB. Installing or setting up a DB server is not requir
 
 Just ```spring-boot:run``` and you're ready.
 
+## Demo
+[Heroku App](https://reporting-dashboard-mert.herokuapp.com)
+
+
 ### Notes
 
 - To change default port (8080) or default API URL (sandbox), you can use ```/src/main/resources/application.yml```
