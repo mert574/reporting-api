@@ -10,3 +10,9 @@ logging:
 
 reportingapi:
   url: "https://sandbox-reporting.rpdpymnt.com/api/v3"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: logfile, health
