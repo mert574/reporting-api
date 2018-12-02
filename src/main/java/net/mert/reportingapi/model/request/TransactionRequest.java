@@ -11,4 +11,6 @@ public class TransactionRequest {
     @Max(32)
     @NotEmpty
     private String transactionId;
+
+    private String apiKey;
 }

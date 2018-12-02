@@ -32,4 +32,6 @@ public class TransactionListRequest {
     private String filterValue;
 
     private Integer page;
+
+    private String apiKey;
 }

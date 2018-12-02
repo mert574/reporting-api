@@ -14,4 +14,6 @@ public class TransactionsReportRequest {
     private Date fromDate, toDate;
     
     private Integer merchant, acquirer;
+
+    private String apiKey;
 }

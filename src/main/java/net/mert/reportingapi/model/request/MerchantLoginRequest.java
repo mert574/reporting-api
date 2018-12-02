@@ -1,13 +1,10 @@
 package net.mert.reportingapi.model.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Data
-@AllArgsConstructor
 public class MerchantLoginRequest {
 
     @NotEmpty @Email
@@ -15,4 +12,11 @@ public class MerchantLoginRequest {
 
     @NotEmpty
     private String password;
+
+    private String apiKey;
+
+    public MerchantLoginRequest(@NotEmpty @Email String email, @NotEmpty String password) {
+        this.email = email;
+        this.password = password;
+    }
 }
