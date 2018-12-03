@@ -6,10 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.Max;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -54,15 +53,20 @@ public class Merchant {
             token,
             ipnType;
 
-//    TODO: IPNUrl && Date as timestamp
     @JsonProperty("IPNUrl")
     private String ipnUrl;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Timestamp date;
 
     private Boolean allowPartialCapture,
             allowPartialRefund;
 
     private Agent agent;
+
+    public Long getDate() {
+        if (this.date != null) {
+            return this.date.getTime();
+        }
+        return null;
+    }
 }
